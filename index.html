@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Operations Consulting</title>
+<meta name="description" content="Meridian embeds with mid-market companies to fix operational bottlenecks, build scalable systems and deliver a clear path forward — in just 90 days.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-family-primary: Geist, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.75rem;
+  --font-size-2xl: 2.25rem;
+  --font-size-3xl: 2.5rem;
+  --font-size-4xl: 4.5rem;
+  --font-weight-base: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --line-height-base: 1.5;
+  --color-text-primary: #181312;
+  --color-text-tertiary: color(srgb 0.0941176 0.0745098 0.0705882 / 0.7);
+  --color-text-inverse: color(srgb 0.952941 0.921569 0.894118 / 0.7);
+  --color-border-muted: #f3ebe4;
+  --color-surface-base: #000000;
+  --color-surface-strong: color(srgb 0.0941176 0.0745098 0.0705882 / 0.16);
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 6.175rem;
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 1528px;
+  --motion-instant: 300ms;
+  --max-width: 1200px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-text-primary);
+  color: #fff;
+  z-index: 1000;
+  border-radius: var(--radius-xs);
+}
+.skip-link:focus { top: var(--space-4); }
+
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-5); }
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  transition: background var(--motion-instant), box-shadow var(--motion-instant);
+}
+.navbar.scrolled {
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border-muted);
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.navbar .logo { font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); }
+.navbar .nav-links { display: flex; align-items: center; gap: var(--space-6); }
+.navbar .nav-links a { font-size: var(--font-size-md); position: relative; }
+.navbar .nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform var(--motion-instant);
+}
+.navbar .nav-links a:hover::after { transform: scaleX(1); }
+.navbar .nav-links a:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--color-text-primary);
+  transition: transform var(--motion-instant), opacity var(--motion-instant);
+}
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+.hamburger:focus-visible { outline: 2px solid var(--color-text-primary); outline-offset: 2px; border-radius: var(--radius-xs); }
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--color-surface-base);
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { color: #fff; font-size: var(--font-size-xl); }
+.mobile-menu a:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: var(--radius-xs); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-base);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: opacity var(--motion-instant), transform var(--motion-instant);
+  white-space: nowrap;
+  line-height: 1;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 2px;
+}
+.btn:active { transform: scale(0.98); }
+.btn--primary-dark {
+  background: var(--color-surface-base);
+  color: #fff;
+}
+.btn--primary-dark:hover { opacity: 0.85; }
+.btn--primary-light {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-muted);
+}
+.btn--primary-light:hover {
+  background: var(--color-surface-strong);
+}
+.btn--arrow::after { content: '→'; transition: transform var(--motion-instant); }
+.btn--arrow:hover::after { transform: translateX(4px); }
+.btn--full-mobile { min-height: 44px; }
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px var(--space-5) var(--space-8);
+  background: var(--color-surface-base);
+  color: #fff;
+}
+.hero h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-base);
+  line-height: 1.1;
+  margin-bottom: var(--space-5);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero p {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-inverse);
+  max-width: 640px;
+  margin: 0 auto var(--space-6);
+}
+.hero .btn-group { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
+.hero .btn--primary-light { border-color: rgba(255,255,255,0.2); color: #fff; }
+.hero .btn--primary-light:hover { background: rgba(255,255,255,0.1); }
+
+.stats {
+  background: var(--color-surface-base);
+  padding: 0 var(--space-5) var(--space-8);
+}
+.stats .container {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+.stats .stat { text-align: center; }
+.stats .stat-value {
+  font-size: var(--font-size-4xl);
+  color: #fff;
+  font-weight: var(--font-weight-base);
+  line-height: 1;
+}
+.stats .stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-inverse);
+  margin-top: var(--space-2);
+}
+
+.why {
+  padding: var(--space-8) 0;
+  background: #fff;
+}
+.why .container { max-width: 800px; text-align: center; }
+.why h2 { font-size: var(--font-size-3xl); margin-bottom: var(--space-5); }
+.why p { color: var(--color-text-tertiary); }
+
+.services {
+  padding: var(--space-8) 0;
+  background: #fff;
+}
+.services h2 { text-align: center; font-size: var(--font-size-3xl); margin-bottom: var(--space-7); }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+.service-card {
+  border: 1px solid var(--color-border-muted);
+  border-radius: var(--radius-sm);
+  padding: var(--space-6);
+  transition: border-color var(--motion-instant);
+}
+.service-card:hover { border-color: var(--color-text-primary); }
+.service-card:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+.service-card h3 { font-size: var(--font-size-lg); margin-bottom: var(--space-3); }
+.service-card p { font-size: var(--font-size-md); color: var(--color-text-tertiary); margin-bottom: var(--space-4); }
+.service-card .btn { margin-top: var(--space-2); }
+
+.cta-band {
+  background: var(--color-surface-base);
+  color: #fff;
+  padding: var(--space-8) 0;
+  text-align: center;
+}
+.cta-band h2 { font-size: var(--font-size-3xl); margin-bottom: var(--space-4); }
+.cta-band p { color: var(--color-text-inverse); max-width: 600px; margin: 0 auto var(--space-6); }
+.cta-band .btn--primary-light { border-color: rgba(255,255,255,0.2); color: #fff; }
+.cta-band .btn--primary-light:hover { background: rgba(255,255,255,0.1); }
+
+.testimonials {
+  padding: var(--space-8) 0;
+  background: #fff;
+}
+.testimonials h2 { text-align: center; font-size: var(--font-size-3xl); margin-bottom: var(--space-7); }
+.testimonials-grid {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.testimonial {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border-muted);
+  border-radius: var(--radius-sm);
+}
+.testimonial blockquote {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+  font-style: italic;
+}
+.testimonial .attribution { display: flex; flex-direction: column; gap: var(--space-1); }
+.testimonial .name { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); }
+.testimonial .title { font-size: var(--font-size-sm); color: var(--color-text-tertiary); }
+
+.case-studies {
+  padding: var(--space-8) 0;
+  background: #fff;
+}
+.case-studies h2 { text-align: center; font-size: var(--font-size-3xl); margin-bottom: var(--space-7); }
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+.case-card {
+  border: 1px solid var(--color-border-muted);
+  border-radius: var(--radius-sm);
+  padding: var(--space-6);
+  transition: border-color var(--motion-instant);
+}
+.case-card:hover { border-color: var(--color-text-primary); }
+.case-card:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+.case-card .tag {
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-3);
+  display: block;
+}
+.case-card h3 { font-size: var(--font-size-lg); margin-bottom: var(--space-3); }
+.case-card p { font-size: var(--font-size-md); color: var(--color-text-tertiary); margin-bottom: var(--space-4); }
+.case-card .link-arrow {
+  font-size: var(--font-size-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.case-card .link-arrow::after { content: '→'; transition: transform var(--motion-instant); }
+.case-card .link-arrow:hover::after { transform: translateX(4px); }
+
+.about {
+  padding: var(--space-8) 0;
+  background: #fff;
+}
+.about .container { max-width: 800px; text-align: center; }
+.about h2 { font-size: var(--font-size-2xl); margin-bottom: var(--space-4); }
+.about p { color: var(--color-text-tertiary); }
+.about .btn { margin-top: var(--space-5); }
+
+.cta-final {
+  background: var(--color-surface-base);
+  color: #fff;
+  padding: var(--space-8) 0;
+  text-align: center;
+}
+.cta-final h2 { font-size: var(--font-size-3xl); margin-bottom: var(--space-4); }
+.cta-final p { color: var(--color-text-inverse); max-width: 600px; margin: 0 auto var(--space-6); }
+.cta-final .btn--primary-light { border-color: rgba(255,255,255,0.2); color: #fff; }
+.cta-final .btn--primary-light:hover { background: rgba(255,255,255,0.1); }
+
+.footer {
+  background: var(--color-surface-base);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: var(--space-7) 0 var(--space-6);
+  color: #fff;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-7);
+}
+.footer h4 { font-size: var(--font-size-md); margin-bottom: var(--space-4); }
+.footer p { font-size: var(--font-size-sm); color: var(--color-text-inverse); }
+.footer ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); }
+.footer a { font-size: var(--font-size-sm); color: var(--color-text-inverse); transition: color var(--motion-instant); }
+.footer a:hover { color: #fff; }
+.footer a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: var(--radius-xs); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: var(--space-5);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-inverse);
+}
+.footer-bottom a { color: var(--color-text-inverse); }
+.footer-bottom a:hover { color: #fff; }
+
+@media (max-width: 1024px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .cases-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .navbar .nav-links, .navbar .btn { display: none; }
+  .hamburger { display: flex; }
+  .hero h1 { font-size: var(--font-size-3xl); }
+  .hero p { font-size: var(--font-size-md); }
+  .stats .container { gap: var(--space-6); }
+  .stats .stat-value { font-size: var(--font-size-2xl); }
+  .services-grid { grid-template-columns: 1fr; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding-top: 100px; }
+  .hero h1 { font-size: var(--font-size-2xl); }
+  .hero .btn-group { flex-direction: column; align-items: center; }
+  .hero .btn-group .btn { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<nav class="navbar" id="navbar" aria-label="Main navigation">
+  <div class="container">
+    <a href="#" class="logo" aria-label="Meridian home">Meridian</a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#case-studies">Case Studies</a>
+      <a href="#about">About</a>
+      <a href="#testimonials">Testimonials</a>
+    </div>
+    <a href="#contact" class="btn btn--primary-dark">Book a call</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <a href="#services">Services</a>
+  <a href="#case-studies">Case Studies</a>
+  <a href="#about">About</a>
+  <a href="#testimonials">Testimonials</a>
+  <a href="#contact" class="btn btn--primary-dark" style="color:#fff;">Book a call</a>
+</div>
+
+<main id="main">
+
+<section class="hero">
+  <div>
+    <h1>Built to scale. Ready to perform.</h1>
+    <p>Meridian embeds with mid-market companies to fix operational bottlenecks, build scalable systems and deliver a clear path forward — in just 90 days.</p>
+    <div class="btn-group">
+      <a href="#contact" class="btn btn--primary-dark btn--arrow btn--full-mobile">Book a discovery call</a>
+      <a href="#services" class="btn btn--primary-light btn--arrow btn--full-mobile">View services</a>
+    </div>
+  </div>
+</section>
+
+<section class="stats" aria-label="Key metrics">
+  <div class="container">
+    <div class="stat">
+      <div class="stat-value">$2.4B</div>
+      <div class="stat-label">Client revenue influenced</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">90-day</div>
+      <div class="stat-label">Average engagement length</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">94%</div>
+      <div class="stat-label">Client retention rate</div>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="container">
+    <h2>Growth without systems is just organized chaos</h2>
+    <p>Most mid-market companies don't have an execution problem. They have a systems problem. As revenue grows, the processes that worked at $10M start breaking down at $50M. Decisions slow down. Teams pull in different directions. Meridian exists to fix that — with a structured approach and embedded expertise.</p>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="container">
+    <h2>The work that drives everything we deliver</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>Operations audit</h3>
+        <p>Diagnose what's slowing your business down before committing to a fix. We analyze your processes, team structure and systems to identify the highest-leverage areas for improvement.</p>
+        <a href="#" class="btn btn--primary-light btn--arrow" aria-label="Learn more about Operations audit">Learn more</a>
+      </div>
+      <div class="service-card">
+        <h3>Systems design</h3>
+        <p>Build the operational infrastructure your business needs to scale. We design and implement processes that reduce friction, improve visibility and create consistent results across your organization.</p>
+        <a href="#" class="btn btn--primary-light btn--arrow" aria-label="Learn more about Systems design">Learn more</a>
+      </div>
+      <div class="service-card">
+        <h3>Organizational alignment</h3>
+        <p>Diagnose what's slowing your business down before committing to a fix. We analyze your processes, team structure and systems to identify the highest-leverage areas for improvement.</p>
+        <a href="#" class="btn btn--primary-light btn--arrow" aria-label="Learn more about Organizational alignment">Learn more</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>The Growth Playbook</h2>
+    <p>A 90-day embedded engagement that delivers a complete operational blueprint for your business. Every system documented. Every bottleneck resolved. Every team aligned.</p>
+    <a href="#" class="btn btn--primary-light btn--arrow">Get the download</a>
+  </div>
+</section>
+
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <h2>Hear from our clients</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <blockquote>"We'd been struggling with the same operational bottlenecks for years before Meridian. They helped us identify key problems in our operations. By the end of the 90 days, we had a playbook our entire leadership team could work from. It's the clearest our business has ever felt."</blockquote>
+        <div class="attribution">
+          <span class="name">James Whitfield</span>
+          <span class="title">CEO, Hartwell Distribution</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <blockquote>"The Growth Playbook isn't something that sits in a drawer. We reference it in every quarterly planning session and it's reshaped how we think about hiring, process and accountability in our organization. Meridian didn't just consult, they transformed how our company operates."</blockquote>
+        <div class="attribution">
+          <span class="name">Sarah Okafor</span>
+          <span class="title">COO, Vantage Group</span>
+        </div>
+      </div>
+      <div class="testimonial">
+        <blockquote>"I was skeptical that 90 days was enough time to make a real difference. I was wrong. Meridian came in, understood our business faster than I expected and delivered recommendations we could actually implement. Twelve months later, we're still running on what they built."</blockquote>
+        <div class="attribution">
+          <span class="name">Marcus Ellery</span>
+          <span class="title">Founder, Crestline Services</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="case-studies" id="case-studies">
+  <div class="container">
+    <h2>Operational clarity, measurable outcomes</h2>
+    <div class="cases-grid">
+      <a href="#" class="case-card" aria-label="Read case study: Distribution — Scaling from $30M to $80M without adding headcount">
+        <span class="tag">Distribution</span>
+        <h3>Scaling from $30M to $80M without adding headcount</h3>
+        <p>How we helped a distribution company double revenue with the same team through operational redesign.</p>
+        <span class="link-arrow" aria-hidden="true">Read case study</span>
+      </a>
+      <a href="#" class="case-card" aria-label="Read case study: Healthcare — Building a scalable onboarding process for a growing healthcare services company">
+        <span class="tag">Healthcare</span>
+        <h3>Building a scalable onboarding process for a growing healthcare services company</h3>
+        <p>Standardizing training and client intake for a healthcare provider expanding across new markets.</p>
+        <span class="link-arrow" aria-hidden="true">Read case study</span>
+      </a>
+      <a href="#" class="case-card" aria-label="Read case study: Logistics — Reducing operational costs by 28% without cutting staff">
+        <span class="tag">Logistics</span>
+        <h3>Reducing operational costs by 28% without cutting staff</h3>
+        <p>Process optimization that eliminated waste while preserving headcount and improving service levels.</p>
+        <span class="link-arrow" aria-hidden="true">Read case study</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container">
+    <h2>A small firm with an outsized impact</h2>
+    <p>Meridian was founded on a simple belief: that operational clarity is the single biggest lever available to growing companies. We don't manage dozens of clients at once. We embed deeply, work closely and deliver results that hold.</p>
+    <a href="#" class="btn btn--primary-light btn--arrow btn--full-mobile">Meet the team</a>
+  </div>
+</section>
+
+<section class="cta-final" id="contact">
+  <div class="container">
+    <h2>Ready to build something that scales?</h2>
+    <p>Book a discovery call and find out if Meridian is the right fit for your business.</p>
+    <a href="#" class="btn btn--primary-light btn--arrow">Book a discovery call</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Meridian</h4>
+        <p>Operational clarity for growing companies. Embedded expertise. Measurable results.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">Operations Audit</a></li>
+          <li><a href="#">Systems Design</a></li>
+          <li><a href="#">Organizational Alignment</a></li>
+          <li><a href="#">The Growth Playbook</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">Book a call</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; Meridian Template 2026. All rights reserved.</span>
+      <span>Built by <a href="#">Kevin Dakin</a>. Powered by <a href="#">Webflow</a>.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const navbar = document.getElementById('navbar');
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileLinks = mobileMenu.querySelectorAll('a');
+
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y > 80) { navbar.classList.add('scrolled'); }
+  else { navbar.classList.remove('scrolled'); }
+  lastScroll = y;
+}, { passive: true });
+
+hamburger.addEventListener('click', () => {
+  const open = hamburger.getAttribute('aria-expanded') === 'true' ? false : true;
+  hamburger.setAttribute('aria-expanded', open);
+  hamburger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  mobileMenu.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open) {
+    mobileLinks[0]?.focus();
+  }
+});
+
+mobileLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'Open menu');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+    hamburger.click();
+    hamburger.focus();
+  }
+});
+</script>
+</body>
+</html>

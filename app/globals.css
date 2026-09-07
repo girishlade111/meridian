@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap');
+
+body {
+  font-family: 'Inter', 'Helvetica Neue', system-ui, sans-serif;
+  color: #1A1A1A;
+}
+
+@layer utilities {
+  .stripe-pattern {
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.03) 0px,
+      rgba(0, 0, 0, 0.03) 1px,
+      transparent 1px,
+      transparent 40px
+    );
+  }
+}
