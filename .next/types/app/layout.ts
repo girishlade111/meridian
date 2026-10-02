@@ -1,4 +1,4 @@
-// File: C:\meridian\app\layout.tsx
+// File: /home/hatch/workspace/pub/m944/meridian/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
