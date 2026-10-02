@@ -285,3 +285,7 @@ Private — All rights reserved. Meridian Operations Consulting.
 - Website: [meridian-ops.com](https://meridian-ops.com) (placeholder)
 - Email: hello@meridian-ops.com (placeholder)
 - LinkedIn: [linkedin.com/company/meridian](https://linkedin.com/company/meridian) (placeholder)
+
+---
+
+Built by Girish Lade — [ladestack.in](https://ladestack.in)
